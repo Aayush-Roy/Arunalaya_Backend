@@ -1,0 +1,160 @@
+### 🧑‍💻 USER AUTH ROUTES ###
+@HOST = http://localhost:5000
+@JWT_TOKEN = your_jwt_token_here;
+# Signup (Normal)
+POST http://localhost:5000/api/auth/signup
+Content-Type: application/json
+
+{
+  "name": "demo1",
+  "email": "demo1@example.com",
+  "password": "demo"
+}
+
+###
+
+# Login (Normal)
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "demo1@example.com",
+  "password": "demo"
+}
+
+###
+
+# Login with Google
+POST http://localhost:5000/api/auth/google
+Content-Type: application/json
+
+{
+  "tokenId": "GOOGLE_ID_TOKEN_HERE"
+}
+
+###
+
+# Get Current User (requires JWT)
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDRhZGRiODlkNWY3NTUxN2JiYTE2YyIsImlhdCI6MTc2MTkxNDMzMSwiZXhwIjoxNzYyNTE5MTMxfQ.oi72BbUUMW5TLPIOWrG5HhvARttIShXly27I_9e93lg
+
+###
+
+# Update Profile
+# PUT http://localhost:5000/api/users/update
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDQ0ZmYwN2E3YjllZmQzZTE5MjI4ZCIsImlhdCI6MTc2MTg5MDMwNCwiZXhwIjoxNzYyNDk1MTA0fQ.A3IeoWuy7_wvk7RoyN7JE0dbS8FWe7DmHy--_hII-Vk
+# Content-Type: application/json
+
+# {
+#   "name": "Aayush Updated",
+#   "phone": "9876543210",
+#   "address": "Delhi, India"
+# }
+
+PUT http://localhost:5000/api/users/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDRhZGRiODlkNWY3NTUxN2JiYTE2YyIsImlhdCI6MTc2MTkxNDMzMSwiZXhwIjoxNzYyNTE5MTMxfQ.oi72BbUUMW5TLPIOWrG5HhvARttIShXly27I_9e93lg
+Content-Type: application/json
+
+{
+  "name": "Aayush ",
+  "phone": "9876543210",
+  "address": "Delhi,India"
+}
+
+
+---
+
+### 💆 SERVICE ROUTES ###
+
+# Get All Services
+GET http://localhost:5000/api/services
+
+###
+
+# Get One Service
+GET http://localhost:5000/api/services/690455ed4b4bb33a40d18835
+
+###
+# Bulk Create Services (Admin only)
+POST http://localhost:5000/api/services/bulk
+
+
+
+###
+
+# Add Service (Admin only)
+POST http://localhost:5000/api/services
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDQ0ZmYwN2E3YjllZmQzZTE5MjI4ZCIsImlhdCI6MTc2MTg5MDMwNCwiZXhwIjoxNzYyNDk1MTA0fQ.A3IeoWuy7_wvk7RoyN7JE0dbS8FWe7DmHy--_hII-Vk
+Content-Type: application/json
+
+{
+  "title": "Back Pain Therapy",
+  "description": "Deep muscle relaxation therapy",
+  "price": 699,
+  "durationMins": 45,
+  "image": "https://example.com/backpain.jpg",
+  "category": "Pain Relief"
+}
+
+###
+
+# Update Service
+PUT http://localhost:5000/api/services/{{serviceId}}
+Authorization: Bearer {{JWT_TOKEN}}
+Content-Type: application/json
+
+{
+  "price": 749,
+  "duration": "60 mins"
+}
+
+###
+
+# Delete Service
+DELETE http://localhost:5000/api/services/{{serviceId}}
+Authorization: Bearer {{JWT_TOKEN}}
+
+---
+
+### 📅 BOOKING ROUTES ###
+
+# Create Booking
+POST http://localhost:5000/api/bookings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDQ0ZmYwN2E3YjllZmQzZTE5MjI4ZCIsImlhdCI6MTc2MTg5MDMwNCwiZXhwIjoxNzYyNDk1MTA0fQ.A3IeoWuy7_wvk7RoyN7JE0dbS8FWe7DmHy--_hII-Vk
+Content-Type: application/json
+
+{
+  "serviceId": "690455ed4b4bb33a40d18834",
+  "date": "2025-10-29",
+  "timeSlot": "4:00 PM",
+  "notes": "Knee Pain"
+}
+
+
+
+
+
+###
+
+# Get All Bookings for User
+GET http://localhost:5000/api/bookings
+Authorization: Bearer {{JWT_TOKEN}}
+
+###
+
+# Get Single Booking
+GET http://localhost:5000/api/bookings/{{bookingId}}
+Authorization: Bearer 
+
+###
+
+# Cancel Booking
+PUT http://localhost:5000/api/bookings/{{bookingId}}/cancel
+Authorization: Bearer {{JWT_TOKEN}}
+
+###
+
+# Admin: Get All Bookings
+GET http://localhost:5000/api/admin/bookings
+Authorization: Bearer {{JWT_TOKEN}}
+

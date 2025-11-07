@@ -6,9 +6,10 @@ POST http://localhost:5000/api/auth/signup
 Content-Type: application/json
 
 {
-  "name": "demo1",
-  "email": "demo1@example.com",
-  "password": "demo"
+  "name": "bhadwa",
+  "email": "bhadwa@example.com",
+  "password": "1234",
+  "phone":"1234567890"
 }
 
 ###
@@ -18,8 +19,8 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "demo1@example.com",
-  "password": "demo"
+  "email": "bhadwa@example.com",
+  "password": "1234"
 }
 
 ###
@@ -36,7 +37,7 @@ Content-Type: application/json
 
 # Get Current User (requires JWT)
 GET http://localhost:5000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDRhZGRiODlkNWY3NTUxN2JiYTE2YyIsImlhdCI6MTc2MTkxNDMzMSwiZXhwIjoxNzYyNTE5MTMxfQ.oi72BbUUMW5TLPIOWrG5HhvARttIShXly27I_9e93lg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
 
 ###
 
@@ -52,11 +53,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDRhZGRiO
 # }
 
 PUT http://localhost:5000/api/users/update
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDRhZGRiODlkNWY3NTUxN2JiYTE2YyIsImlhdCI6MTc2MTkxNDMzMSwiZXhwIjoxNzYyNTE5MTMxfQ.oi72BbUUMW5TLPIOWrG5HhvARttIShXly27I_9e93lg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
 Content-Type: application/json
 
 {
-  "name": "Aayush ",
+  "name": "bhadwa ",
   "phone": "9876543210",
   "address": "Delhi,India"
 }
@@ -69,12 +70,21 @@ Content-Type: application/json
 # Get All Services
 GET http://localhost:5000/api/services
 
+
+
+
+### 💆 SERVICE ROUTES DELETE ###
+
+# DELETE All Services
+POST http://localhost:5000/api/deleteAll
+
 ###
 
 # Get One Service
 GET http://localhost:5000/api/services/690455ed4b4bb33a40d18835
 
 ###
+
 # Bulk Create Services (Admin only)
 POST http://localhost:5000/api/services/bulk
 
@@ -120,14 +130,14 @@ Authorization: Bearer {{JWT_TOKEN}}
 
 # Create Booking
 POST http://localhost:5000/api/bookings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDQ0ZmYwN2E3YjllZmQzZTE5MjI4ZCIsImlhdCI6MTc2MTg5MDMwNCwiZXhwIjoxNzYyNDk1MTA0fQ.A3IeoWuy7_wvk7RoyN7JE0dbS8FWe7DmHy--_hII-Vk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
 Content-Type: application/json
 
 {
-  "serviceId": "690455ed4b4bb33a40d18834",
+  "serviceId": "6908478b65b274bc03218af9",
   "date": "2025-10-29",
   "timeSlot": "4:00 PM",
-  "notes": "Knee Pain"
+  "notes": "Joint Pain"
 }
 
 
@@ -138,19 +148,19 @@ Content-Type: application/json
 
 # Get All Bookings for User
 GET http://localhost:5000/api/bookings
-Authorization: Bearer {{JWT_TOKEN}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
 
 ###
 
 # Get Single Booking
-GET http://localhost:5000/api/bookings/{{bookingId}}
-Authorization: Bearer 
+GET http://localhost:5000/api/bookings/690c7c72d9b2d3255d5e5b20
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
 
 ###
 
 # Cancel Booking
-PUT http://localhost:5000/api/bookings/{{bookingId}}/cancel
-Authorization: Bearer {{JWT_TOKEN}}
+PUT http://localhost:5000/api/bookings/690453679dddb7a4ceee43c3/cancel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
 
 ###
 

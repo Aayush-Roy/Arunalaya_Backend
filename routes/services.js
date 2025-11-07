@@ -131,92 +131,114 @@ router.post('/', async (req, res) => {
 
 router.post('/bulk', async (req, res) => {
   try {
-    const serviceList = [
-      {
-        title: "Back Pain Therapy",
-        description: "Deep muscle relaxation therapy to relieve back pain",
-        price: 699,
-        durationMins: 45,
-        image: "https://example.com/backpain.jpg",
-        category: "Pain Relief"
-      },
-      {
-        title: "Aromatherapy Massage",
-        description: "Relaxing full body massage using essential oils",
-        price: 899,
-        durationMins: 60,
-        image: "https://example.com/aroma.jpg",
-        category: "Wellness"
-      },
-      {
-        title: "Hair Spa Treatment",
-        description: "Rejuvenate your hair with deep conditioning and oil massage",
-        price: 499,
-        durationMins: 40,
-        image: "https://example.com/hairspa.jpg",
-        category: "Salon"
-      },
-      {
-        title: "Facial Glow Therapy",
-        description: "Hydrating and brightening facial for glowing skin",
-        price: 799,
-        durationMins: 50,
-        image: "https://example.com/facialglow.jpg",
-        category: "Beauty"
-      },
-      {
-        title: "Acupressure Therapy",
-        description: "Pressure point therapy to balance energy and relieve stress",
-        price: 599,
-        durationMins: 30,
-        image: "https://example.com/acupressure.jpg",
-        category: "Pain Relief"
-      },
-      {
-        title: "Foot Reflexology",
-        description: "Foot massage that targets reflex points to promote healing",
-        price: 499,
-        durationMins: 30,
-        image: "https://example.com/reflexology.jpg",
-        category: "Wellness"
-      },
-      {
-        title: "Thai Massage",
-        description: "Traditional Thai stretching and massage for full body relaxation",
-        price: 999,
-        durationMins: 75,
-        image: "https://example.com/thai.jpg",
-        category: "Therapy"
-      },
-      {
-        title: "Head & Shoulder Massage",
-        description: "Targeted massage for stress relief in head and shoulders",
-        price: 399,
-        durationMins: 25,
-        image: "https://example.com/headshoulder.jpg",
-        category: "Relaxation"
-      },
-      {
-        title: "Body Scrub & Polish",
-        description: "Full body exfoliation and polish for smooth glowing skin",
-        price: 899,
-        durationMins: 60,
-        image: "https://example.com/bodyscrub.jpg",
-        category: "Beauty"
-      },
-      {
-        title: "Hot Stone Therapy",
-        description: "Soothing massage using heated stones for deep relaxation",
-        price: 1099,
-        durationMins: 70,
-        image: "https://example.com/hotstone.jpg",
-        category: "Therapy"
-      }
-    ];
+   const serviceList = [
+  {
+    id: '1',
+    title: 'Lower Back Pain Relief',
+    category: 'Back Pain',
+    price: 799, 
+    duration: '45 min',
+    rating: 4.8,
+    reviews: 234,
+    image: 'https://i.pinimg.com/1200x/e9/08/b7/e908b70ba54bfce2e51d56963232ef07.jpg',
+    description: 'Specialized treatment for chronic lower back pain using advanced techniques including manual therapy, exercises, and pain management strategies.',
+    benefits: [
+      'Reduces pain and inflammation',
+      'Improves mobility and flexibility',
+      'Prevents future injuries',
+      'Personalized exercise program'
+    ],
+  },
+  {
+    id: '2',
+    title: 'Sports Injury Recovery',
+    category: 'Sports Injury',
+    price: 1299,
+    duration: '60 min',
+    rating: 4.9,
+    reviews: 189,
+    image: 'https://i.pinimg.com/736x/fc/07/a9/fc07a9589e2bc8fc2e3f6058f5504cda.jpg',
+    description: 'Complete rehabilitation program for sports-related injuries. Focuses on quick recovery and performance enhancement.',
+    benefits: [
+      'Faster recovery time',
+      'Strengthens affected areas',
+      'Improves athletic performance',
+      'Injury prevention techniques'
+    ],
+  },
+  {
+    id: '3',
+    title: 'Neck Pain Treatment',
+    category: 'Neck Pain',
+    price: 699,
+    duration: '40 min',
+    rating: 4.7,
+    reviews: 156,
+    image: 'https://i.pinimg.com/1200x/91/53/f4/9153f4e921c679cccecb46ccfd2fd3a2.jpg',
+    description: 'Effective treatment for neck stiffness, cervical pain, and work-related neck issues.',
+    benefits: [
+      'Relieves neck stiffness',
+      'Improves posture',
+      'Reduces headaches',
+      'Work-from-home friendly tips'
+    ],
+  },
+  {
+    id: '4',
+    title: 'Knee Pain Management',
+    category: 'Joint Pain',
+    price: 899,
+    duration: '50 min',
+    rating: 4.8,
+    reviews: 267,
+    image: 'https://i.pinimg.com/736x/bb/c0/51/bbc051578aa737aee65cf1f3ee27845a.jpg',
+    description: 'Comprehensive knee pain treatment including strengthening exercises and pain management.',
+    benefits: [
+      'Reduces knee pain',
+      'Strengthens leg muscles',
+      'Improves walking ability',
+      'Arthritis management'
+    ],
+  },
+  {
+    id: '5',
+    title: 'Post-Surgery Rehabilitation',
+    category: 'Post Surgery',
+    price: 1499,
+    duration: '60 min',
+    rating: 4.9,
+    reviews: 145,
+    image: 'https://i.pinimg.com/1200x/40/b1/ad/40b1adb6bcaff65325039c026d73cb61.jpg',
+    description: 'Specialized post-operative care to ensure smooth recovery and regain full functionality.',
+    benefits: [
+      'Accelerated healing',
+      'Scar tissue management',
+      'Strength rebuilding',
+      'Pain-free movement'
+    ],
+  },
+  {
+    id: '6',
+    title: 'Shoulder Pain Relief',
+    category: 'Joint Pain',
+    price: 849,
+    duration: '45 min',
+    rating: 4.7,
+    reviews: 198,
+    image: 'https://i.pinimg.com/1200x/fe/5a/bc/fe5abcf5a52864567bc53ee99c9104e0.jpg',
+    description: 'Treatment for frozen shoulder, rotator cuff injuries, and general shoulder pain.',
+    benefits: [
+      'Increases range of motion',
+      'Reduces inflammation',
+      'Strengthens shoulder muscles',
+      'Daily activity guidance'
+    ],
+  },
+];
 
     // ✅ Correct way to insert multiple documents
     const createdServices = await Service.insertMany(serviceList);
-
+    
     res.status(201).json({
       message: `${createdServices.length} services created successfully`,
       services: createdServices
@@ -226,9 +248,15 @@ router.post('/bulk', async (req, res) => {
     res.status(500).json({ message: 'Server error while creating bulk services' });
   }
 });
-
-
-
+router.post('/deleteAll', async (req, res) => {
+  try {
+    const result = await Service.deleteMany({});    
+    res.status(200).json({ message: `Deleted ${result.deletedCount} services.` });
+  } catch (err) {
+    console.error('Error deleting all services:', err);
+    res.status(500).json({ message: 'Server error while deleting services' });
+  } 
+});
 
 router.get('/', async (req, res) => {
 const services = await Service.find().limit(50);

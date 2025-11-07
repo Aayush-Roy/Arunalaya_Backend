@@ -1,71 +1,4 @@
-// import express from 'express';
-// import bcrypt from 'bcryptjs';
-// import jwt from 'jsonwebtoken';
-// import { OAuth2Client } from 'google-auth-library';
-// import User from '../models/User.js';
-// const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-// const router = express.Router();
-// router.post('/signup', async (req, res) => {
-// const { name, email, password, phone } = req.body;
-// try {
-// let user = await User.findOne({ email });
-// if (user) return res.status(400).json({ message: 'User already exists' });
-// const salt = await bcrypt.genSalt(10);
-// const hashed = await bcrypt.hash(password, salt);
-// user = new User({ name, email, password: hashed, phone });
-// await user.save();
-// const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-// res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
-// } catch (err) {
-// console.error(err);
-// res.status(500).send('Server error');
-// }
-// });
 
-
-// // Login (email)
-// router.post('/login', async (req, res) => {
-// const { email, password } = req.body;
-// try {
-// const user = await User.findOne({ email });
-// if (!user) return res.status(400).json({ message: 'Invalid credentials' });
-// if (!user.password) return res.status(400).json({ message: 'Use social login' });
-// const isMatch = await bcrypt.compare(password, user.password);
-// if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-// const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-// res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
-// } catch (err) {
-// console.error(err);
-// res.status(500).send('Server error');
-// }
-// });
-
-
-// // Google Sign-in (client sends idToken)
-// router.post('/google', async (req, res) => {
-// const { idToken } = req.body;
-// try {
-// const ticket = await googleClient.verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID });
-// const payload = ticket.getPayload();
-// const { sub: googleId, email, name } = payload;
-// let user = await User.findOne({ email });
-// if (!user) {
-// user = new User({ name, email, googleId });
-// await user.save();
-// } else if (!user.googleId) {
-// user.googleId = googleId;
-// await user.save();
-// }
-// const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-// res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
-// } catch (err) {
-// console.error(err);
-// res.status(401).json({ message: 'Google token invalid' });
-// }
-// });
-
-
-// export default router;
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -129,7 +62,7 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Server error during signup' });
   }
 });
-
+                                                
 // 🟡 LOGIN (email-password)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -155,42 +88,70 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
-  }
+  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 });
 
 // 🔵 GOOGLE SIGN-IN
-router.post('/google', async (req, res) => {
-  const { idToken } = req.body;
+
+// routes/auth.js
+router.post("/google", async (req, res) => {
   try {
-    const ticket = await googleClient.verifyIdToken({
-      idToken,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
-    const { sub: googleId, email, name } = payload;
-
+    const { googleId, email, name, picture } = req.body;
+    
+    // Check if user exists
     let user = await User.findOne({ email });
+    
     if (!user) {
-      user = new User({ name, email, googleId });
-      await user.save();
-    } else if (!user.googleId) {
-      user.googleId = googleId;
-      await user.save();
+      // Create new user
+      user = await User.create({
+        name,
+        email,
+        googleId,
+        picture,
+        authProvider: "google"
+      });
     }
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
-    });
-
-    res.json({
-      token,
-      user: { id: user._id, name: user.name, email: user.email },
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(401).json({ message: 'Google token invalid' });
+    
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    
+    res.json({ token, user });
+  } catch (error) {
+    res.status(500).json({ message: "Google Sign-In failed" });
   }
 });
+// router.post('/google', async (req, res) => {
+//   const { idToken } = req.body;
+//   try {
+//     const ticket = await googleClient.verifyIdToken({
+//       idToken,
+//       audience: process.env.GOOGLE_CLIENT_ID,
+//     });
+//     const payload = ticket.getPayload();
+//     const { sub: googleId, email, name } = payload;
+
+//     let user = await User.findOne({ email });
+//     if (!user) {
+//       user = new User({ name, email, googleId });
+//       await user.save();
+//     } else if (!user.googleId) {
+//       user.googleId = googleId;
+//       await user.save();
+//     }
+
+//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+//       expiresIn: '7d',
+//     });
+
+//     res.json({
+//       token,
+//       user: { id: user._id, name: user.name, email: user.email },
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(401).json({ message: 'Google token invalid' });
+//   }
+// });
 
 
 // router.get("/me", authMiddleware, async (req, res) => {
@@ -255,6 +216,7 @@ router.get('/profile', authMiddleware, async (req, res) => {
 router.put('/update', authMiddleware, async (req, res) => {
   console.log("🟡 Received body:", req.body);
   const { name, phone, address } = req.body;
+  console.log(name,phone,address);
   try {
     const user = await User.findByIdAndUpdate(
       req.user.id,

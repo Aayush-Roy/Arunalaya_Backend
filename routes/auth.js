@@ -10,28 +10,8 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID || '841193026
 const router = express.Router();
 
 // 🟢 SIGNUP (only create user)
-// router.post('/signup', async (req, res) => {
-//   const { name, email, password, phone } = req.body;
-//   try {
-//     let user = await User.findOne({ email });
-//     if (user) return res.status(400).json({ message: 'User already exists' });
-
-//     const salt = await bcrypt.genSalt(10);
-//     const hashed = await bcrypt.hash(password, salt);
-
-//     user = new User({ name, email, password: hashed, phone });
-//     await user.save();
-
-//     // 🔸 Don't generate token here
-//     res.status(201).json({ message: 'Signup successful. Please login to continue.' });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server error');
-//   }
-// });
 router.post('/signup', async (req, res) => {
   const { name, email, password, phone } = req.body;
-
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
@@ -42,26 +22,46 @@ router.post('/signup', async (req, res) => {
     user = new User({ name, email, password: hashed, phone });
     await user.save();
 
-    // 🔹 Generate JWT token after successful signup
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
-    });
-
-    // Optional: store token in DB if you need
-    user.token = token;
-    await user.save();
-
-    // ✅ Send token + user info to client directly
-    res.status(201).json({
-      token,
-      user: { id: user._id, name: user.name, email: user.email },
-      message: 'Signup successful! Logged in automatically.',
-    });
+    // 🔸 Don't generate token here
+    res.status(201).json({ message: 'Signup successful. Please login to continue.' });
   } catch (err) {
-    console.error('❌ Signup error:', err);
-    res.status(500).json({ message: 'Server error during signup' });
+    console.error(err);
+    res.status(500).send('Server error');
   }
 });
+// router.post('/signup', async (req, res) => {
+//   const { name, email, password, phone } = req.body;
+
+//   try {
+//     let user = await User.findOne({ email });
+//     if (user) return res.status(400).json({ message: 'User already exists' });
+
+//     const salt = await bcrypt.genSalt(10);
+//     const hashed = await bcrypt.hash(password, salt);
+
+//     user = new User({ name, email, password: hashed, phone });
+//     await user.save();
+
+//     // 🔹 Generate JWT token after successful signup
+//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+//       expiresIn: '7d',
+//     });
+
+//     // Optional: store token in DB if you need
+//     user.token = token;
+//     await user.save();
+
+//     // ✅ Send token + user info to client directly
+//     res.status(201).json({
+//       token,
+//       user: { id: user._id, name: user.name, email: user.email },
+//       message: 'Signup successful! Logged in automatically.',
+//     });
+//   } catch (err) {
+//     console.error('❌ Signup error:', err);
+//     res.status(500).json({ message: 'Server error during signup' });
+//   }
+// });
                                                 
 // 🟡 LOGIN (email-password)
 router.post('/login', async (req, res) => {

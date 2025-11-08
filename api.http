@@ -76,7 +76,7 @@ GET http://localhost:5000/api/services
 ### 💆 SERVICE ROUTES DELETE ###
 
 # DELETE All Services
-POST http://localhost:5000/api/deleteAll
+POST http://localhost:5000/api/services/deleteAll
 
 ###
 

@@ -1,12 +1,11 @@
-
-
+You said:
 
 import express from 'express';
 import Service from '../models/Service.js';
 const router = express.Router();
 
-// 🔹 Create a new service
-// 🔹 Create a new service
+
+
 router.post('/', async (req, res) => {
   try {
     const { title, description, price, durationMins, image, category } = req.body;
@@ -242,7 +241,7 @@ router.post('/bulk', async (req, res) => {
     const createdServices = await Service.insertMany(serviceList);
     
     res.status(201).json({
-      message: `${createdServices.length} services created successfully`,
+      message: ${createdServices.length} services created successfully,
       services: createdServices
     });
   } catch (err) {
@@ -253,7 +252,7 @@ router.post('/bulk', async (req, res) => {
 router.post('/deleteAll', async (req, res) => {
   try {
     const result = await Service.deleteMany({});    
-    res.status(200).json({ message: `Deleted ${result.deletedCount} services.` });
+    res.status(200).json({ message: Deleted ${result.deletedCount} services. });
   } catch (err) {
     console.error('Error deleting all services:', err);
     res.status(500).json({ message: 'Server error while deleting services' });
@@ -273,5 +272,33 @@ if (!service) return res.status(404).json({ message: 'Not found' });
 res.json(service);
 });
 
+router.delete('/:id',async(req,res)=>{
+  const service = await Service.findById(req.params.id);
+  if(!service) return res.status(404).json({message:"Not Found"});
+  await Service.findByIdAndDelete(service);
+})
 
-export default router;
+// 🔹 Update an existing service
+router.put('/:id', async (req, res) => {
+  try {
+    const { title, description, price, durationMins, image, category } = req.body;
+
+    const updatedService = await Service.findByIdAndUpdate(
+      req.params.id,
+      { title, description, price, durationMins, image, category },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedService) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+
+    res.status(200).json({
+      message: 'Service updated successfully',
+      service: updatedService
+    });
+  } catch (error) {
+    console.error('Error updating service:', error);
+    res.status(500).json({ message: 'Server error while updating service' });
+  }
+});

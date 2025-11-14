@@ -6,8 +6,8 @@ POST http://localhost:5000/api/auth/signup
 Content-Type: application/json
 
 {
-  "name": "bhadwa",
-  "email": "bhadwa@example.com",
+  "name": "ramesh",
+  "email": "ramesh@example.com",
   "password": "1234",
   "phone":"1234567890"
 }
@@ -19,7 +19,7 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "bhadwa@example.com",
+  "email": "ramesh@example.com",
   "password": "1234"
 }
 
@@ -130,15 +130,33 @@ Authorization: Bearer {{JWT_TOKEN}}
 
 # Create Booking
 POST http://localhost:5000/api/bookings
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM5OTAyMjZiOGY4MzlmZTY3YWZlNyIsImlhdCI6MTc2MjQzMzI4MiwiZXhwIjoxNzYzMDM4MDgyfQ._uf5SDQM1-2VSoN-GT_ia0oGMowq3PGG3J1Nz6Hv9WM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MTU2ZDA3ZjlmODFjYTcwZjQ1NGQ2ZSIsImlhdCI6MTc2MzAxMTg1NywiZXhwIjoxNzYzNjE2NjU3fQ.oo83aPrxuoeYf_md-HGmL3usqZIJOUPUtZxVPw4Q11Y
 Content-Type: application/json
 
 {
-  "serviceId": "6908478b65b274bc03218af9",
+  "serviceId": "690d83a4b154229984c1ba01",
   "date": "2025-10-29",
-  "timeSlot": "4:00 PM",
-  "notes": "Joint Pain"
+  "timeSlot": "2:00 PM",
+  "notes": "Back Pain",
+  "userLat": 28.621958,
+  "userLng": 77.087449
 }
+
+
+
+
+# {
+#   "serviceId": "690d83a4b154229984c1ba01",
+#   "date": "2025-10-29",
+#   "timeSlot": "2:00 PM",
+#   "notes": "Back Pain",
+#   "location": {
+#     "lat": 28.6139,
+#     "lng": 77.2090
+#   }
+# }
+
+
 
 
 

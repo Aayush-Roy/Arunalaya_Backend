@@ -121,8 +121,8 @@ Content-Type: application/json
 ###
 
 # Delete Service
-DELETE http://localhost:5000/api/services/{{serviceId}}
-Authorization: Bearer {{JWT_TOKEN}}
+DELETE http://localhost:5000/api/services/690d83a4b154229984c1b9fd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGVkNmY0YzFkMTg0OWRkNmZmNjgxOCIsImlhdCI6MTc2MjU4MzQ4MywiZXhwIjoxNzYzMTg4MjgzfQ.7WsIJ10BWQrtLDgVIiaO7HH-Iw-so-FWP1oUbhbnpA0
 
 ---
 

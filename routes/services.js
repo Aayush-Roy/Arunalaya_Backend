@@ -36,100 +36,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// router.post('/bulk',async(req,res)=>{
-//     try{
-//     const serviceList = new Service([
-//   {
-//     "title": "Back Pain Therapy",
-//     "description": "Deep muscle relaxation therapy to relieve back pain",
-//     "price": 699,
-//     "durationMins": 45,
-//     "image": "https://example.com/backpain.jpg",
-//     "category": "Pain Relief"
-//   },
-//   {
-//     "title": "Aromatherapy Massage",
-//     "description": "Relaxing full body massage using essential oils",
-//     "price": 899,
-//     "durationMins": 60,
-//     "image": "https://example.com/aroma.jpg",
-//     "category": "Wellness"
-//   },
-//   {
-//     "title": "Hair Spa Treatment",
-//     "description": "Rejuvenate your hair with deep conditioning and oil massage",
-//     "price": 499,
-//     "durationMins": 40,
-//     "image": "https://example.com/hairspa.jpg",
-//     "category": "Salon"
-//   },
-//   {
-//     "title": "Facial Glow Therapy",
-//     "description": "Hydrating and brightening facial for glowing skin",
-//     "price": 799,
-//     "durationMins": 50,
-//     "image": "https://example.com/facialglow.jpg",
-//     "category": "Beauty"
-//   },
-//   {
-//     "title": "Acupressure Therapy",
-//     "description": "Pressure point therapy to balance energy and relieve stress",
-//     "price": 599,
-//     "durationMins": 30,
-//     "image": "https://example.com/acupressure.jpg",
-//     "category": "Pain Relief"
-//   },
-//   {
-//     "title": "Foot Reflexology",
-//     "description": "Foot massage that targets reflex points to promote healing",
-//     "price": 499,
-//     "durationMins": 30,
-//     "image": "https://example.com/reflexology.jpg",
-//     "category": "Wellness"
-//   },
-//   {
-//     "title": "Thai Massage",
-//     "description": "Traditional Thai stretching and massage for full body relaxation",
-//     "price": 999,
-//     "durationMins": 75,
-//     "image": "https://example.com/thai.jpg",
-//     "category": "Therapy"
-//   },
-//   {
-//     "title": "Head & Shoulder Massage",
-//     "description": "Targeted massage for stress relief in head and shoulders",
-//     "price": 399,
-//     "durationMins": 25,
-//     "image": "https://example.com/headshoulder.jpg",
-//     "category": "Relaxation"
-//   },
-//   {
-//     "title": "Body Scrub & Polish",
-//     "description": "Full body exfoliation and polish for smooth glowing skin",
-//     "price": 899,
-//     "durationMins": 60,
-//     "image": "https://example.com/bodyscrub.jpg",
-//     "category": "Beauty"
-//   },
-//   {
-//     "title": "Hot Stone Therapy",
-//     "description": "Soothing massage using heated stones for deep relaxation",
-//     "price": 1099,
-//     "durationMins": 70,
-//     "image": "https://example.com/hotstone.jpg",
-//     "category": "Therapy"
-//   }
-// ]
-// )
-//     await serviceList.save();
-//     }catch(err){
-//         console.error('Error creating bulk services:', err);
-//         res.status(500).json({ message: 'Server error while creating bulk services' });
-//     }
-// })
-
-
-// list services
 
 router.post('/bulk', async (req, res) => {
   try {
@@ -272,6 +178,50 @@ const service = await Service.findById(req.params.id);
 if (!service) return res.status(404).json({ message: 'Not found' });
 res.json(service);
 });
+
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Service.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    res.json({ message: "Service deleted successfully" });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: "Server error while deleting service" });
+  }
+});
+
+// UPDATE service
+router.put('/:id', async (req, res) => {
+  try {
+    const { title, description, price, durationMins, image, category } = req.body;
+
+    const updatedService = await Service.findByIdAndUpdate(
+      req.params.id,
+      { title, description, price, durationMins, image, category },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedService) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    res.json({
+      message: "Service updated successfully",
+      service: updatedService,
+    });
+
+  } catch (err) {
+    console.error("Update error:", err);
+    res.status(500).json({ message: "Server error while updating service" });
+  }
+});
+
+
 
 
 export default router;
